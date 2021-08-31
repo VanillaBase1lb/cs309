@@ -4,8 +4,6 @@
 #include<math.h>
 #include<stdbool.h>
 
-// 01000000001000000000000000000000
-
 bool isInteger(float N)
 {
     int X = N;
@@ -84,53 +82,56 @@ int convertint(int in){
 }
 
 int convertfloat(float fl){
-    char binary[64] = "0";
+    char binary[33] = "0";
     int length;
     short negative = 0;
     int biasValue;
     int i;
     if (fl < 0)
             binary[0] = '1';
-        length = sizeof(float);
-        biasValue = 127;
-
-        int temp = abs((int)fl);
-        char intPart[64] = "0";
-        char mantissaF[24];
-        // converting integer part to binary
-        for (i = 0; temp > 0; i++) // division process to get reverse binary
+    else if (fl == 0)
+    {
+        printf("00000000000000000000000000000000\n");
+        return 0;
+    }
+    length = sizeof(float);
+    biasValue = 127;
+    int temp = abs((int)fl);
+    char intPart[33] = "0";
+    char mantissaF[24]="0";
+    // converting integer part to binary
+    for (i = 0; temp > 0; i++) // division process to get reverse binary
+    {
+        intPart[i] = (temp % 2) ? '1' : '0';
+        temp = temp / 2;
+    }
+    for (int j = i; j < sizeof(int) * 8; j++) // fill empty spaces with 0
+    {
+        intPart[j] = '0';
+    }
+    binary[sizeof(int) * 8] = '\0';
+    strcpy(intPart, strrev(intPart));
+    float tempf = fabs(fl) - abs((int)fl);
+    char flPart[24] = "0";
+    // converting float part to binary
+    for (i = 0; tempf > 0; i++) // multiplication process to get binary
+    {
+        tempf = tempf * 2;
+        if (tempf >= 1)
         {
-            intPart[i] = (temp % 2) ? '1' : '0';
-            temp = temp / 2;
+            flPart[i] = '1';
+            tempf = tempf - 1;
         }
-        for (int j = i; j < sizeof(int) * 8; j++) // fill empty spaces with 0
-        {
-            intPart[j] = '0';
-        }
-        binary[sizeof(int) * 8] = '\0';
-        strcpy(intPart, strrev(intPart));
-        
-        float tempf = fabs(fl) - abs((int)fl);
-        char flPart[24] = "0";
-        // converting float part to binary
-        for (i = 0; tempf > 0; i++) // multiplication process to get binary
-        {
-            tempf = tempf * 2;
-            if (tempf >= 1)
-            {
-                flPart[i] = '1';
-                tempf = tempf - 1;
-            }
-            else
-                flPart[i] = '0';
-        }
-        for (int j = i; j < 23; j++) // fill empty spaces with 0
-        {
-            flPart[j] = '0';
-        }
-        flPart[23] = '\0';
-        int trueExponent = 0;
-        // convert into normalized representation
+        else
+            flPart[i] = '0';
+    }
+    for (int j = i; j < 23; j++) // fill empty spaces with 0
+    {
+        flPart[j] = '0';
+    }
+    flPart[23] = '\0';                
+    int trueExponent = 0;
+    // convert into normalized representation
         for (i = 0; intPart[i] == '0' && intPart[i] != '\0'; i++) // get to the first 1 in intPart
         {
         }
@@ -167,9 +168,10 @@ int convertfloat(float fl){
         }
         for (int j = i; j < 8; j++)
         {
-            intPart[j] = '0';
+            biasExpF[j] = '0';
         }
         biasExpF[8] = '\0';
+        strcpy(biasExpF, strrev(biasExpF));        
 
         printf("%c%s%s\n", binary[0], biasExpF, mantissaF);
         //printf("%f\n", fl);
@@ -197,16 +199,16 @@ int main(){
     int k;
     if(type1=='i' && bNum1[0]=='0'){
         for(int i=1;i<32;i++){      
-            (bNum1[i]=='0') ? (calInt1+=0) : (calInt1+=pow(2,(31-i)));
+            (bNum1[i]=='0') ? (fNum1+=0) : (fNum1+=pow(2,(31-i)));
         }
-        printf("Decimal Equivalent of 1st Input: %d\n", calInt1);
+        printf("Decimal Equivalent of 1st Input: %f\n", fNum1);
     }
     if(type1=='i' && bNum1[0]=='1'){
-        calInt1=(-1)*pow(2,31);
+        fNum1=(-1)*pow(2,31);
         for(int i=1;i<=31;i++){
-            (bNum1[i]=='0') ? (calInt1+=0) : (calInt1+=pow(2,31-i));
+            (bNum1[i]=='0') ? (fNum1+=0) : (fNum1+=pow(2,31-i));
         }
-        printf("Decimal Equivalent of 1st Input: %d\n", calInt1);
+        printf("Decimal Equivalent of 1st Input: %f\n", fNum1);
     }
     if(type1=='f'){
             for(int i=1;i<=8;i++){
@@ -229,16 +231,16 @@ int main(){
     }
     if(type2=='i' && bNum2[0]=='0'){
         for(int i=1;i<32;i++){
-            (bNum2[i]=='0') ? (calInt2+=0) : (calInt2+=pow(2,(31-i)));
+            (bNum2[i]=='0') ? (fNum2+=0) : (fNum2+=pow(2,(31-i)));
         }
-        printf("Decimal Equivalent of 2nd Input: %d\n", calInt2);
+        printf("Decimal Equivalent of 2nd Input: %f\n", fNum2);
     }
     if(type2=='i' && bNum2[0]=='1'){
-        calInt2=(-1)*pow(2,31);
+        fNum2=(-1)*pow(2,31);
         for(int j=1;j<=31;j++){
-            (bNum2[j]=='0') ? (calInt2+=0) : (calInt2+=pow(2,31-j));
+            (bNum2[j]=='0') ? (fNum2+=0) : (fNum2+=pow(2,31-j));
         }
-        printf("Decimal Equivalent of 2nd Input: %d\n", calInt2);
+        printf("Decimal Equivalent of 2nd Input: %f\n", fNum2);
     }
     if(type2=='f'){
         exp=0;
@@ -260,65 +262,19 @@ int main(){
             mantissa[24]='\0';
             printf("Decimal Equivalent of 2nd Input: %f\n", fNum2);
     }
-    int isum=0;
     int convertedflsum;
     int convertedflmul;
-    float fsum=0;
-    int imulti=0;
-    float fmulti=0;
-    if(type1=='i' & type2=='i'){
-        isum+=calInt1+calInt2;
-        imulti+=calInt1*calInt2;
-        convertint(isum);
-        convertint(imulti);
-    } else if(type1=='i' && type2=='f'){
-        fsum+=calInt1+fNum2;
-        fmulti+=calInt1*fNum2;
-        if(isInteger(fsum)){
-            convertedflsum=floor(fsum);
-            convertint(convertedflsum);
-        }
-        else{
-            convertfloat(fsum);
-        }
-        if(isInteger(fmulti)){
-            convertedflmul=floor(fmulti);
-            convertint(convertedflmul);
-        } else {
-            convertfloat(fmulti);
-        }
-    } else if(type1=='f' && type2=='i'){
-        fsum+=fNum1+calInt2;
-        fmulti+=fNum1*calInt2;
-        if(isInteger(fsum)){
-            convertedflsum=floor(fsum);
-            convertint(convertedflsum);
-        }
-        else{
-            convertfloat(fsum);
-        }
-        if(isInteger(fmulti)){
-            convertedflmul=floor(fmulti);
-            convertint(convertedflmul);
-        } else {
-            convertfloat(fmulti);
-        }
-    } else if(type1=='f' && type2=='f'){
-        fsum+=fNum1+fNum2;
-        fmulti+=fNum1*fNum2;
-        if(isInteger(fsum)){
-            convertedflsum=floor(fsum);
-            convertint(convertedflsum);
-        }
-        else{
-            convertfloat(fsum);
-        }
-        if(isInteger(fmulti)){
-            convertedflmul=floor(fsum);
-            convertint(convertedflmul);
-        } else {
-            convertfloat(fmulti);
-        }
-    }
     
+    float fsum=fNum1+fNum2;
+    float fmulti=fNum1*fNum2;
+    if(isInteger(fsum)){
+        printf("%0.0f\n",fsum);
+    } else {
+        printf("%f\n", fsum);
+    }
+    if(isInteger(fmulti)){
+        printf("%0.0f\n",fmulti);
+    } else {
+        printf("%f\n",fmulti);
+    }
 }
