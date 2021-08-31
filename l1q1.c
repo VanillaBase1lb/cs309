@@ -90,6 +90,11 @@ int main()
         
         if (fl < 0)
             binary[0] = '1';
+        else if (fl == 0)
+        {
+            printf("00000000000000000000000000000000\n");
+            return 0;
+        }
         length = sizeof(float);
         biasValue = 127;
 
@@ -108,7 +113,7 @@ int main()
         }
         binary[sizeof(int) * 8] = '\0';
         strcpy(intPart, strrev(intPart));
-        
+
         float tempf = fabs(fl) - abs((int)fl);
         char flPart[24] = "0";
         // converting float part to binary
@@ -127,7 +132,7 @@ int main()
         {
             flPart[j] = '0';
         }
-        flPart[23] = '\0';
+        flPart[23] = '\0';                
         int trueExponent = 0;
         // convert into normalized representation
         for (i = 0; intPart[i] == '0' && intPart[i] != '\0'; i++) // get to the first 1 in intPart
@@ -166,11 +171,12 @@ int main()
         }
         for (int j = i; j < 8; j++)
         {
-            intPart[j] = '0';
+            biasExpF[j] = '0';
         }
         biasExpF[8] = '\0';
+        strcpy(biasExpF, strrev(biasExpF));        
 
-        printf("%c%s%s", binary[0], biasExpF, mantissaF);
+        printf("%c%s%s\n", binary[0], biasExpF, mantissaF);
 
         break;
         
@@ -179,6 +185,11 @@ int main()
         
         if (du < 0)
             binary[0] = '1';
+        else if (fl == 0)
+        {
+            printf("00000000000000000000000000000000\n");
+            return 0;
+        }
         length = sizeof(double);
         biasValue = 1023;
 
@@ -250,11 +261,12 @@ int main()
         }
         for (int j = i; j < 11; j++)
         {
-            intPart[j] = '0';
+            biasExpD[j] = '0';
         }
         biasExpD[11] = '\0';
+        strcpy(biasExpD, strrev(biasExpD));
 
-        printf("%c%s%s", binary[0], biasExpD, mantissaD);
+        printf("%c%s%s\n", binary[0], biasExpD, mantissaD);
         break;
         
     default:
