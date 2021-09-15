@@ -1,0 +1,23 @@
+The Microsoft Macro Assembler (MASM) is an x86 assembler that uses the Intel syntax for MS-DOS and 
+Microsoft Windows. Beginning with MASM 8.0, there are two versions of the assembler: One for 16-bit
+& 32-bit assembly sources, and another (ML64) for 64-bit sources only. MASM is maintained by Microsoft,
+but since version 6.12 it has not been sold as a separate product. It is instead supplied with various
+Microsoft SDKs and C compilers. Recent versions of MASM are included with Microsoft Visual Studio.
+The earliest versions of MASM were sold either as the generic "Microsoft Macro Assembler" for all 
+x86 machines or as the OEM version specifically for IBM PCs. By Version 4.0, the IBM release was 
+dropped. Up to Version 3.0, MASM was also bundled with a smaller companion assembler, ASM.EXE. This 
+was intended for PCs with only 64k of memory and lacked some features of the full MASM, such as the 
+ability to use code macros. 
+
+MASM has never been softened or compromised into a consumer friendly tool and is designed to be used 
+by professional programmers for operating system level code and high performance object modules, executable 
+files and dynamic link libraries.
+
+The latest Version currently working is The MASM32 SDK version 11.
+
+
+We may also Use NASM instead of MASM.NASM is an asssembler for the x86 CPU architecture portable to nearly every
+modern platform, and with code generation for many platforms old and new. The Netwide Assembler (NASM) is an 
+assembler and disassembler for the Intel x86 architecture. It can be used to write 16-bit, 32-bit (IA-32) and 
+64-bit (x86-64) programs. NASM is considered to be one of the most popular assemblers for Linux. But we can use
+it on Windows based systems too.
