@@ -1,7 +1,7 @@
 extern printf
 
 section .data
-    num dq 12
+    num dq 12 ; works for upto 12, see l5bonustry.asm for different approach
     format db "%d",10, 0
 
 section .text
