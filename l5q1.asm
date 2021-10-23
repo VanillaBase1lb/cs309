@@ -6,7 +6,7 @@ section .data
     ; define 2 numbers to be added
     num1 db 1h, 2h, 87h, 1h, 87h, 1h, 2h, 87h, 1h, 87h, 1h, 87h, 1h, 2h, 87h
     num2 db 3h, 6h, 87h, 1h, 87h, 3h, 6h, 87h, 10h, 87h, 1h, 87h, 3h, 6h, 87h
-    result times numofbytes db 0 ; result will be stored in this array of data
+    result1 times numofbytes db 0 ; result will be stored in this array of data
     format db "%d ", 0
     newline db 10, 0 ; newline required to flush the buffer
     openingMsg db "Contents of each byte in decimal format:", 10, 0
@@ -32,7 +32,7 @@ loop:
     jc setcarry ; if the addition results in carry, then jump
     mov r9, 0 ; set back carry variable to 0
 cont:
-    mov [result + rbx], r12b ; store the result of addition in memory
+    mov [result1 + rbx], r12b ; store the result of addition in memory
     dec r14 ; decrement pointer
     dec r15
     dec rbx
@@ -55,7 +55,7 @@ exit:
     call printf
 
     xor r13, r13 ; counter variable. Can be reused since calculation part is over
-    mov r14, result ; pointer to result array
+    mov r14, result1 ; pointer to result array
 
 ; print each byte in the result array in decimal format
 printloop:

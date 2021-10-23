@@ -4,7 +4,7 @@ extern scanf
 section .data
 format db '%d %d', 0
 openingMsg db 'Enter x and n(>0) with a space in 1 + x + x^2 + ... + x^n', 10, 0
-result db '%d', 10, 0
+result1 db '%d', 10, 0
 
 section .bss
 x resb 4
@@ -48,7 +48,7 @@ main:
         jmp sum_loop
     sum_exit:
     
-    mov rdi, result
+    mov rdi, result1
     mov rsi, r10
     xor rax, rax
     call printf
