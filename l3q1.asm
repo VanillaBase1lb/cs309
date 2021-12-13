@@ -38,6 +38,6 @@ if_even:
     jmp cont
 
 
-nasm l3q1.asm -f elf64
-gcc l3q1.o -m -no-pie
-./a.out
+; nasm l3q1.asm -f elf64
+; gcc l3q1.o -m -no-pie
+; ./a.out
